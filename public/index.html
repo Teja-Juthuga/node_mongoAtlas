@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager </title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/style.css" />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap-icons -->
+    <link rel="stylesheet" type="text/css" href="font/bootstrap-icons.min.css" />
+
+    <!-- Handlebar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+</head>
+
+<body onload="displayTasks()">
+
+    <div class="container">
+        <div class="card    shadow-lg p-4">
+            <h1 class="text-center mb-2"> Task Manager </h1>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="taskTitle" placeholder="Urgent" required>
+                <label for="taskTitle">Enter a Task Title </label>
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a Task Description" id="taskDescription" required
+                    style="height: 100px"></textarea>
+                <label for="taskDescription"> Description </label>
+            </div>
+            <button class="btn btn-primary my-4" onclick="addTask()"> <span class="bi bi-plus-circle"></span> Add Task
+            </button>
+            <div class="my-4 text-center" id="responseMsgBlock" style="display: none;">
+                <span class="bi bi-info"></span><span id="responseMsg"></span>
+            </div>
+        </div>
+    </div>
+    <h3 class="mt-4"> Pending Tasks </h3>
+<!--     
+             Tabs 
+    <ul class="nav nav-tabs mt-4 mb-3">
+        <li class="nav-item">
+            <a class="nav-link active" onclick="displayPendingTasks()" id="pendingTasksTab" aria-current="page"
+                href="#"> Your Tasks </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" onclick="displayCompletedTasks()" id="completedTasksTab" aria-current="page" href="#">
+                Completed Tasks </a>
+        </li>
+    </ul>
+ -->
+
+    <div class="container-fluid">
+        <div class="row" id="row">
+
+        </div>
+        <!-- Template -->
+        <div id="template" style="display: none;">
+
+            <h2>{{ taskTitle }} </h2>
+            <p> {{ taskDescription }} </p>
+            <div>
+                <!-- Edit Task Button trigger modal -->
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Modal{{ _id }}"
+                    onclick="editTask(event)" id={{_id}}>
+                    <span class="bi bi-pencil"></span> Edit
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="Modal{{ _id }}" tabindex="-1" aria-labelledby="ModelTitle{{_id}}"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h1 class="modal-title  fs-5" id="ModelTitle{{_id}}">Update Task </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="editTaskTitle{{_id}}"
+                                        placeholder="Urgent">
+                                    <label for="editTaskTitle{{_id}}">Enter a Task Title </label>
+                                </div>
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a Task Description"
+                                        id="editTaskDescription{{_id}}" style="height: 200px"></textarea>
+                                    <label for="editTaskDescription{{_id}}"> Description </label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id={{_id}} onclick="updateTask(event)"
+                                    data-bs-dismiss="modal">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete Task -->
+                <button class="btn btn-danger" id={{_id}} onclick="deleteTask(event)"><span class="bi bi-trash3"></span>
+                    Delete
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="javascripts/script.js"></script>
+</body>
+
+</html>
